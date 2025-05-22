@@ -97,7 +97,7 @@ platform = atmelavr
 board = pro8MHzatmega328
 framework = arduino
 lib_deps = Wire
-upload_speed = 57600
+upload_speed = 115200
 monitor_speed = 115200
 build_flags = -DDEBUG
 ```
@@ -106,7 +106,7 @@ build_flags = -DDEBUG
 
 ## 🧪 Debugging
 
-When `-DDEBUG` is set, serial debug output is printed at **57600 baud**, showing:
+When `-DDEBUG` is set, serial debug output is printed showing:
 
 - Key number and state (PRESSED/RELEASED)
 - Number of keys buffered

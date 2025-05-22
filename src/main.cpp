@@ -7,6 +7,14 @@
 #include <Arduino.h>
 #include <Wire.h>
 
+#ifdef DEBUG
+#define DEBUG_PRINT(x) Serial.print(x)
+#define DEBUG_PRINTLN(x) Serial.println(x)
+#else
+#define DEBUG_PRINT(x)
+#define DEBUG_PRINTLN(x)
+#endif
+
 // === Configuration ===
 #define I2C_ADDRESS 0x10        // Different from encoder (0x11, 0x12, 0x13, 0x14)
 #define MATRIX_ROWS 4           // Number of matrix rows
@@ -65,11 +73,13 @@ void setup() {
   Wire.begin(I2C_ADDRESS);       // Set this device's I2C address
   Wire.onRequest(sendKeyboardData); // Register callback for when master requests data
   
+#ifdef DEBUG
   // Initialize serial communication for debugging
   Serial.begin(115200);           // Start serial
-  Serial.println("[I2C SLAVE] Keyboard slave starting...");
-  Serial.print("I2C Address: 0x"); // Display I2C address for verification
-  Serial.println(I2C_ADDRESS, HEX);
+  DEBUG_PRINTLN("[I2C SLAVE] Keyboard slave starting...");
+  DEBUG_PRINT("I2C Address: 0x"); // Display I2C address for verification
+  DEBUG_PRINTLN(I2C_ADDRESS, HEX);
+#endif
   
   // Initialize matrix hardware pins
   setupMatrix();
@@ -87,7 +97,9 @@ void setup() {
   // Initialize change buffer
   pendingChanges = 0;
   
-  Serial.println("[INIT] Matrix initialized, ready for scanning...");
+#ifdef DEBUG
+  DEBUG_PRINTLN("[INIT] Matrix initialized, ready for scanning...");
+#endif
 }
 
 void setupMatrix() {
@@ -176,30 +188,36 @@ void processKeyChanges() {
           keyChangeBuffer[pendingChanges].newState = keyStates[row][col].currentState ? 1 : 0;
           pendingChanges++;
           
+#ifdef DEBUG
           // Output debug information to serial monitor
-          Serial.print("[KEY] ");
-          Serial.print(keyNumbers[row][col]); // Print key number
-          Serial.print(" ");
-          Serial.print(keyStates[row][col].currentState ? "PRESSED" : "RELEASED");
-          Serial.print(" (Row: ");
-          Serial.print(row);
-          Serial.print(", Col: ");
-          Serial.print(col);
-          Serial.println(")");
+          DEBUG_PRINT("[KEY] ");
+          DEBUG_PRINT(keyNumbers[row][col]); // Print key number
+          DEBUG_PRINT(" ");
+          DEBUG_PRINT(keyStates[row][col].currentState ? "PRESSED" : "RELEASED");
+          DEBUG_PRINT(" (Row: ");
+          DEBUG_PRINT(row);
+          DEBUG_PRINT(", Col: ");
+          DEBUG_PRINTLN(col);
+          DEBUG_PRINTLN(")");
+#endif
         } else {
+#ifdef DEBUG
           // Buffer overflow - this shouldn't happen with reasonable polling rates
-          Serial.println("[WARNING] Key change buffer overflow!");
+          DEBUG_PRINTLN("[WARNING] Key change buffer overflow!");
+#endif
         }
       }
     }
   }
   
   // If we have pending changes, log how many we're buffering
+#ifdef DEBUG
   if (pendingChanges > 0) {
-    Serial.print("[BUFFER] ");
-    Serial.print(pendingChanges);
-    Serial.println(" key change(s) ready for I2C transmission");
+    DEBUG_PRINT("[BUFFER] ");
+    DEBUG_PRINT(pendingChanges);
+    DEBUG_PRINTLN(" key change(s) ready for I2C transmission");
   }
+#endif
 }
 
 void sendKeyboardData() {
@@ -207,9 +225,11 @@ void sendKeyboardData() {
   
   // Check if we have any key changes to send
   if (pendingChanges > 0) {
-    Serial.print("[I2C] Sending ");
-    Serial.print(pendingChanges);
-    Serial.println(" keypress change(s)");
+#ifdef DEBUG
+    DEBUG_PRINT("[I2C] Sending ");
+    DEBUG_PRINT(pendingChanges);
+    DEBUG_PRINTLN(" keypress change(s)");
+#endif
     
     // Send unified protocol header
     Wire.write(DATA_TYPE_KEYPRESS);  // First byte: indicate this is keypress data
@@ -221,19 +241,25 @@ void sendKeyboardData() {
       Wire.write(keyChangeBuffer[i].keyNumber & 0xFF);         // Low byte of key number  
       Wire.write(keyChangeBuffer[i].newState);                 // State byte (1=pressed, 0=released)
       
-      Serial.print("  Key ");
-      Serial.print(keyChangeBuffer[i].keyNumber);
-      Serial.print(" -> ");
-      Serial.println(keyChangeBuffer[i].newState ? "PRESSED" : "RELEASED");
+#ifdef DEBUG
+      DEBUG_PRINT("  Key ");
+      DEBUG_PRINT(keyChangeBuffer[i].keyNumber);
+      DEBUG_PRINT(" -> ");
+      DEBUG_PRINTLN(keyChangeBuffer[i].newState ? "PRESSED" : "RELEASED");
+#endif
     }
     
     // Clear the buffer after sending
     pendingChanges = 0;
     
-    Serial.println("[I2C] Keypress transfer complete");
+#ifdef DEBUG
+    DEBUG_PRINTLN("[I2C] Keypress transfer complete");
+#endif
   } else {
+#ifdef DEBUG
     // No new data to send, just send empty message
-    Serial.println("[I2C] No new keypress data to send");
+    DEBUG_PRINTLN("[I2C] No new keypress data to send");
+#endif
     Wire.write(DATA_TYPE_KEYPRESS);  // First byte: indicate this is keypress data
     Wire.write(0);                   // Second byte: 0 (no key changes)
   }
