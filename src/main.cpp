@@ -66,7 +66,7 @@ void setup() {
   Wire.onRequest(sendKeyboardData); // Register callback for when master requests data
   
   // Initialize serial communication for debugging
-  Serial.begin(57600);           // Start serial at 57600 baud
+  Serial.begin(115200);           // Start serial
   Serial.println("[I2C SLAVE] Keyboard slave starting...");
   Serial.print("I2C Address: 0x"); // Display I2C address for verification
   Serial.println(I2C_ADDRESS, HEX);
