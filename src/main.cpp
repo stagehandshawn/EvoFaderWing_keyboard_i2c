@@ -1,6 +1,7 @@
-// === COMPLETE KEYBOARD I2C SLAVE: ATmega328P ===
-// Handles 4x10 matrix keyboard with circular buffer for multiple keypresses
-// Single file version - everything included
+// EvoFaderWingKeyboard i2c slave
+
+// The matrix is 4 rows and 10 columns
+// From the backside 0,0 is top left
 
 #include <Arduino.h>
 #include <Wire.h>
