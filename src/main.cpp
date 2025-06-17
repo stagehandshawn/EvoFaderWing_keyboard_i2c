@@ -1,7 +1,7 @@
 // EvoFaderWingKeyboard i2c slave
 
 // The matrix is 4 rows and 10 columns
-// From the backside 0,0 is top left
+// From the backside 0,0 is top right starting at key 401
 
 #include <Arduino.h>
 #include <Wire.h>

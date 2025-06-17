@@ -5,6 +5,8 @@
 //================================
 #ifdef DEBUG
   bool debugMode = true;  // Enables or disables verbose serial output
+#else
+  bool debugMode = false;  // disables or disables verbose serial output
 #endif
 
 
