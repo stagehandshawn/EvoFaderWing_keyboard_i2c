@@ -1,11 +1,15 @@
 
 
 # EvoFaderWingKeyboard matrix
-Sends key press and release over i2c to faderwing master
+- Sends key press and release over i2c to faderwing master
 Uses atmega328p 3.3v 8mhz version
 
+- This repo supports the full project [EvoFaderWing](https://github.com/stagehandshawn/EvoFaderWing)
+
 ```
-(Row 0 - top)       (Row 3 - bottom)
+View from front
+
+  Col 0                                                          Col 9
 +------+------+------+------+------+------+------+------+------+------+
 | 401  | 402  | 403  | 404  | 405  | 406  | 407  | 408  | 409  | 410  | ← Row 0
 +------+------+------+------+------+------+------+------+------+------+
@@ -17,7 +21,7 @@ Uses atmega328p 3.3v 8mhz version
 +------+------+------+------+------+------+------+------+------+------+
 ```
 
-### Column Order (left to right from backside):
+### Column Order (left to right from front):
 
 | Column | Pin  |
 |--------|------|
@@ -41,3 +45,9 @@ Uses atmega328p 3.3v 8mhz version
 | 2   | A2   |
 | 3   | A3   |
 
+## Wiring diagram
+- Keyboard Matrix
+  - Coming soon...
+
+- Keyboard and touch sensor 
+![Keyboard and touch sensor board](https://github.com/stagehandshawn/EvoFaderWing_keyboard_i2c/blob/main/images/evofaderwing_keyboard_touch_wiring.png)
