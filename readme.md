@@ -47,7 +47,7 @@ View from front
 
 ## Wiring diagram
 - Keyboard Matrix
-  - Coming soon...
+  ![Keyboard matrix wiring diagram](https://github.com/stagehandshawn/EvoFaderWing_keyboard_i2c/blob/main/images/evofaderwing_keyboard_matrix_wring.png) 
 
 - Keyboard and touch sensor 
 ![Keyboard and touch sensor board](https://github.com/stagehandshawn/EvoFaderWing_keyboard_i2c/blob/main/images/evofaderwing_keyboard_touch_wiring.png)
