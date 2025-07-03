@@ -12,7 +12,7 @@
 #define MATRIX_ROWS 4           
 #define MATRIX_COLS 10          
 #define DEBOUNCE_MS 20          
-#define CHANGE_BUFFER_SIZE 4    // Small buffer for multiple keypresses
+#define CHANGE_BUFFER_SIZE 8    // Small buffer for multiple keypresses
 
 // === Protocol Constants ===
 #define DATA_TYPE_KEYPRESS 0x02  
