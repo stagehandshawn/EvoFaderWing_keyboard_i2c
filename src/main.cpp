@@ -66,7 +66,7 @@ void setup() {
   Wire.onRequest(sendKeyboardData); 
   
   Serial.begin(57600);           
-  debugPrint("[KEYBOARD] Circular buffer keyboard slave starting...");
+  debugPrint("EvoFaderWing keyboard slave starting...");
   debugPrintf("I2C Address: 0x%02X", I2C_ADDRESS);
   
   setupMatrix();
@@ -85,7 +85,7 @@ void setup() {
   bufferTail = 0;
   bufferCount = 0;
   
-  debugPrint("[KEYBOARD] Matrix initialized, ready for scanning...");
+  debugPrint("Matrix initialized, ready for scanning...");
 }
 
 // === MAIN LOOP ===
@@ -154,7 +154,7 @@ void scanMatrix() {
 
 // === I2C DATA TRANSMISSION ===
 void sendKeyboardData() {
-  // Always send keypress type - never encoder data!
+  // Send keypress type 
   Wire.write(DATA_TYPE_KEYPRESS);  
   
   uint8_t changesAvailable = getBufferedChangeCount();
